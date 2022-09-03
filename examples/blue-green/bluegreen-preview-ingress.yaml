@@ -1,17 +1,33 @@
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
+apiVersion: oort.ccs.guidewire.com/v1alpha1
+kind: GatewayConfig
 metadata:
   name: bluegreen-demo-preview
-  annotations:
-    ingress.kubernetes.io/proxy-body-size: 100M
-    kubernetes.io/ingress.class: nginx
-    ingress.kubernetes.io/app-root: /
 spec:
-  rules:
-  - host: blue-green-preview.dev.argoproj.io
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: bluegreen-demo-preview
-          servicePort: 80
+  profiles:
+  - name: Default
+  path_configs:
+  - name: Default
+    paths:
+    - /
+    profiles:
+    - Default
+  service_ref: bluegreen-demo-preview
+
+# ---
+# apiVersion: networking.k8s.io/v1beta1
+# kind: Ingress
+# metadata:
+#   name: bluegreen-demo-preview
+#   annotations:
+#     ingress.kubernetes.io/proxy-body-size: 100M
+#     kubernetes.io/ingress.class: nginx
+#     ingress.kubernetes.io/app-root: /
+# spec:
+#   rules:
+#   - host: blue-green-preview.dev.argoproj.io
+#     http:
+#       paths:
+#       - path: /
+#         backend:
+#           serviceName: bluegreen-demo-preview
+#           servicePort: 80
